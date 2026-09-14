@@ -370,6 +370,68 @@ export interface PetWeightInfo {
   weightTrend: string;
 }
 
+// ---- 건강 분석 (Health Analysis API) ----
+
+export type HealthAnalysisType = 'DAILY' | 'WEEKLY' | 'MONTHLY';
+
+export interface HealthAnalysisListItem {
+  analysisId: number;
+  healthAnalysisTitle: string;
+  healthAnalysisSummary: string;
+  healthAnalysisFullContent: Record<string, unknown>;
+  analysisDate: string;
+  analysisType: string;
+  analysisStatus: string;
+}
+
+export interface HealthAnalysisPageInfo {
+  page: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+}
+
+export interface HealthAnalysisListResponse {
+  message: string;
+  pageInfo: HealthAnalysisPageInfo;
+  data: HealthAnalysisListItem[];
+}
+
+export interface HealthAnalysisDetail {
+  message: string;
+  analysisId: number;
+  petId: number;
+  healthAnalysisTitle: string;
+  healthAnalysisSummary: string;
+  healthAnalysisFullContent: Record<string, unknown>;
+  analysisDate: string;
+  analysisType: string;
+  analysisStatus: string;
+}
+
+export interface CreateHealthAnalysisRequest {
+  analysisType: HealthAnalysisType;
+  specialNotes: string[];
+}
+
+export interface CreateHealthAnalysisResponse {
+  message: string;
+  analysisId: number;
+}
+
+export interface UpdateHealthAnalysisRequest {
+  healthAnalysisTitle?: string;
+  healthAnalysisSummary?: string;
+}
+
+export interface UpdateHealthAnalysisResponse {
+  message: string;
+}
+
+export interface DeleteHealthAnalysisResponse {
+  message: string;
+}
+
 export interface PetDetailResponse {
   message: string;
   petId: number;
