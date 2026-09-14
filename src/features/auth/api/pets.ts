@@ -1,6 +1,8 @@
 import { apiClient } from '@/shared/api/axios';
 
 import type {
+  CreateHealthAnalysisRequest,
+  CreateHealthAnalysisResponse,
   CreatePetInvitationCodeResponse,
   CreatePetRequest,
   CreatePetResponse,
@@ -8,11 +10,14 @@ import type {
   CreatePetSpecialNoteResponse,
   CreatePetWeightRequest,
   CreatePetWeightResponse,
+  DeleteHealthAnalysisResponse,
   DeletePetWeightResponse,
   DeletePetSpecialNoteResponse,
   FamilyApplicationsResponse,
   FamilyBlockedUsersResponse,
   FamilyPendingUsersResponse,
+  HealthAnalysisDetail,
+  HealthAnalysisListResponse,
   LeavePetFamilyResponse,
   PetDetailResponse,
   PetFamilyApprovalRequest,
@@ -23,6 +28,8 @@ import type {
   PetWeightHistoryResponse,
   ReleaseFamilyBlockedUserRequest,
   ReleaseFamilyBlockedUserResponse,
+  UpdateHealthAnalysisRequest,
+  UpdateHealthAnalysisResponse,
   UpdatePetRequest,
   UpdatePetResponse,
   UpdatePetSpecialNoteRequest,
@@ -51,6 +58,13 @@ export interface GetPetWeightHistoryParams {
   page?: number;
   size?: number;
   sort?: string;
+}
+
+export interface GetHealthAnalysisListParams {
+  page?: number;
+  size?: number;
+  sort?: string[];
+  period?: string;
 }
 
 export interface GetFamilyPendingUsersParams {
@@ -251,5 +265,47 @@ export async function updatePetWeight(
 
 export async function deletePetWeight(petId: number, weightId: number): Promise<DeletePetWeightResponse> {
   const response = await apiClient.delete<DeletePetWeightResponse>(`/pet/${petId}/weight/${weightId}`);
+  return response.data;
+}
+
+export async function getHealthAnalysisList(
+  petId: number,
+  params?: GetHealthAnalysisListParams,
+): Promise<HealthAnalysisListResponse> {
+  const response = await apiClient.get<HealthAnalysisListResponse>(`/health/analysis/${petId}`, {
+    params: {
+      page: params?.page ?? 0,
+      size: params?.size ?? 10,
+      sort: params?.sort,
+      period: params?.period,
+    },
+  });
+
+  return response.data;
+}
+
+export async function getHealthAnalysisDetail(analysisId: number): Promise<HealthAnalysisDetail> {
+  const response = await apiClient.get<HealthAnalysisDetail>(`/health/analysis/detail/${analysisId}`);
+  return response.data;
+}
+
+export async function createHealthAnalysis(
+  petId: number,
+  payload: CreateHealthAnalysisRequest,
+): Promise<CreateHealthAnalysisResponse> {
+  const response = await apiClient.post<CreateHealthAnalysisResponse>(`/health/analysis/ai-report/${petId}`, payload);
+  return response.data;
+}
+
+export async function updateHealthAnalysis(
+  analysisId: number,
+  payload: UpdateHealthAnalysisRequest,
+): Promise<UpdateHealthAnalysisResponse> {
+  const response = await apiClient.patch<UpdateHealthAnalysisResponse>(`/health/analysis/${analysisId}`, payload);
+  return response.data;
+}
+
+export async function deleteHealthAnalysis(analysisId: number): Promise<DeleteHealthAnalysisResponse> {
+  const response = await apiClient.delete<DeleteHealthAnalysisResponse>(`/health/analysis/${analysisId}`);
   return response.data;
 }

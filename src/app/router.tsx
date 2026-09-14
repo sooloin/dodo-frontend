@@ -15,6 +15,8 @@ import { FamilyJoinPage } from '@/pages/family/FamilyJoinPage';
 import { MainPage } from '@/pages/main/MainPage';
 import { PetDetailPage } from '@/pages/my/PetDetailPage';
 import { PetEditPage } from '@/pages/my/PetEditPage';
+import { PetHealthAnalysisDetailPage } from '@/pages/my/PetHealthAnalysisDetailPage';
+import { PetHealthAnalysisPage } from '@/pages/my/PetHealthAnalysisPage';
 import { MyDodoPage } from '@/pages/my/MyDodoPage';
 import { NotificationsPage } from '@/pages/my/NotificationsPage';
 import { NotificationSettingsPage } from '@/pages/my/NotificationSettingsPage';
@@ -133,6 +135,22 @@ export const router = createBrowserRouter([
         element: (
           <RequireAuth>
             <PetWeightPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: '/my/pets/:petId/health',
+        element: (
+          <RequireAuth>
+            <PetHealthAnalysisPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: '/my/pets/:petId/health/:analysisId',
+        element: (
+          <RequireAuth>
+            <PetHealthAnalysisDetailPage />
           </RequireAuth>
         ),
       },

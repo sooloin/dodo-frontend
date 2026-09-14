@@ -59,3 +59,21 @@ export const WITHDRAW_USER_STATUS_MESSAGES: Partial<Record<number, string>> = {
 export const NICKNAME_CHECK_STATUS_MESSAGES: Partial<Record<number, string>> = {
   500: '중복 확인에 실패했어요. 잠시 후 다시 시도해주세요.',
 };
+
+/** 건강 분석 조회 GET /health/analysis/{petId}, GET /health/analysis/detail/{analysisId} */
+export const HEALTH_ANALYSIS_LIST_STATUS_MESSAGES: Partial<Record<number, string>> = {
+  400: '건강 분석 조회 요청이 올바르지 않아요.',
+  401: '로그인이 필요해요. 다시 로그인해주세요.',
+  403: '조회 권한이 없는 분석이에요.',
+  404: '해당 분석을 찾을 수 없어요.',
+  500: '서버 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
+};
+
+/** 건강 분석 생성/수정/삭제 */
+export const HEALTH_ANALYSIS_MUTATION_STATUS_MESSAGES: Partial<Record<number, string>> = {
+  400: '입력값을 다시 확인해주세요.',
+  401: '로그인이 필요해요. 다시 로그인해주세요.',
+  403: '처리 권한이 없는 분석이에요.',
+  404: '해당 분석을 찾을 수 없어요.',
+  500: '서버 오류가 발생했어요. 잠시 후 다시 시도해주세요.',
+};

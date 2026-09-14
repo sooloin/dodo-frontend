@@ -59,6 +59,19 @@ export const queryKeys = {
         params?.size ?? 10,
         params?.sort ?? 'petWeightsMeasuredAt,desc',
       ] as const,
+    healthAnalysis: {
+      list: (petId: number, params?: { page?: number; size?: number; period?: string }) =>
+        [
+          'pets',
+          petId,
+          'health-analysis',
+          'list',
+          params?.page ?? 0,
+          params?.size ?? 10,
+          params?.period ?? '',
+        ] as const,
+      detail: (analysisId: number) => ['pets', 'health-analysis', analysisId, 'detail'] as const,
+    },
   },
   fence: {
     boundaries: () => ['fence', 'boundaries'] as const,

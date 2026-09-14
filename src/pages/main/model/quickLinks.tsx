@@ -17,5 +17,5 @@ export const QUICK_LINKS: QuickLinkItem[] = [
   { id: 'pet', label: '나의 반려동물', to: '/my', Icon: PetIcon },
   { id: 'walk', label: '산책 기록', to: '/walk', Icon: WalkIcon },
   { id: 'device', label: '디바이스 관리', to: '/my', Icon: DeviceIcon },
-  { id: 'report', label: '레포트 보관함', to: '/my', Icon: ReportIcon },
+  { id: 'report', label: '레포트 보관함', to: '/my?menu=ai-report', Icon: ReportIcon },
 ];
