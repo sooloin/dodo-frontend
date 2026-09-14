@@ -65,4 +65,16 @@ export const queryKeys = {
     boundary: (fenceId: number) => ['fence', fenceId, 'boundary'] as const,
     status: (petId: number) => ['fence', petId, 'status'] as const,
   },
+  notifications: {
+    list: (params?: { page?: number; size?: number; isRead?: boolean; type?: string }) =>
+      [
+        'notifications',
+        'list',
+        params?.page ?? 0,
+        params?.size ?? 20,
+        params?.isRead ?? null,
+        params?.type ?? null,
+      ] as const,
+    unreadCount: () => ['notifications', 'unread-count'] as const,
+  },
 } as const;

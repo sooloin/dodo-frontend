@@ -105,7 +105,7 @@ export function getMyDodoMenuHref(key: MyDodoMenuKey): string {
 }
 
 export function getMyDodoMenuKeyByPathname(pathname: string): MyDodoMenuKey {
-  if (pathname.startsWith('/my/notifications')) {
+  if (pathname.startsWith('/my/notifications') || pathname.startsWith('/my/notification-settings')) {
     return 'notifications';
   }
 

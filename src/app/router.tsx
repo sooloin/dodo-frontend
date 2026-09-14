@@ -16,6 +16,7 @@ import { MainPage } from '@/pages/main/MainPage';
 import { PetDetailPage } from '@/pages/my/PetDetailPage';
 import { PetEditPage } from '@/pages/my/PetEditPage';
 import { MyDodoPage } from '@/pages/my/MyDodoPage';
+import { NotificationsPage } from '@/pages/my/NotificationsPage';
 import { NotificationSettingsPage } from '@/pages/my/NotificationSettingsPage';
 import { PetRegistrationPage } from '@/pages/my/PetRegistrationPage';
 import { PetSpecialNotesPage } from '@/pages/my/PetSpecialNotesPage';
@@ -73,6 +74,14 @@ export const router = createBrowserRouter([
       },
       {
         path: '/my/notifications',
+        element: (
+          <RequireAuth>
+            <NotificationsPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: '/my/notification-settings',
         element: (
           <RequireAuth>
             <NotificationSettingsPage />

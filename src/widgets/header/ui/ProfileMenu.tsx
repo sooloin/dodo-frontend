@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useCurrentUser } from '@/features/auth/model/useCurrentUser';
 import profileDefaultIllustration from '@/features/auth/assets/profile-default.svg';
+import { useUnreadNotificationCount } from '@/features/notification';
 
 interface ProfileAvatarImageProps {
   profileUrl: string | null;
@@ -35,6 +36,8 @@ function ProfileAvatarImage({ profileUrl, sizeClass = 'h-9 w-9' }: ProfileAvatar
 
 export function ProfileMenu() {
   const { profileUrl, displayName, region } = useCurrentUser();
+  const { data: unreadCountData } = useUnreadNotificationCount();
+  const unreadCount = unreadCountData?.unreadCount ?? 0;
   const rootRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -69,9 +72,15 @@ export function ProfileMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label="프로필 메뉴"
-        className="cursor-pointer rounded-full transition-opacity hover:opacity-90"
+        className="relative cursor-pointer rounded-full transition-opacity hover:opacity-90"
       >
         <ProfileAvatarImage profileUrl={profileUrl} />
+        {unreadCount > 0 ? (
+          <span
+            aria-hidden
+            className="absolute right-0 top-0 h-2.5 w-2.5 rounded-full border-2 border-white bg-red-500"
+          />
+        ) : null}
       </button>
 
       {open ? (
@@ -96,6 +105,11 @@ export function ProfileMenu() {
             >
               <span aria-hidden>🔔</span>
               알림함
+              {unreadCount > 0 ? (
+                <span className="ml-auto rounded-full bg-red-500 px-2 py-0.5 text-[11px] font-semibold text-white">
+                  {unreadCount > 99 ? '99+' : unreadCount}
+                </span>
+              ) : null}
             </Link>
           </div>
         </div>
