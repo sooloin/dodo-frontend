@@ -9,14 +9,7 @@ import petDefaultCatIllustration from '@/shared/assets/images/pet-default-cat.sv
 import petDefaultIllustration from '@/shared/assets/images/pet-default.svg';
 import { Skeleton } from '@/shared/ui';
 
-import {
-  extractHealthReportDisplayContent,
-  extractHealthReportRecommendations,
-  formatDateLabel,
-  formatWeightLabel,
-  getMainPetSpecies,
-  summarizeContent,
-} from '../../model/formatters';
+import { formatDateLabel, formatWeightLabel, getMainPetSpecies } from '../../model/formatters';
 
 interface HealthReportSectionProps {
   isLoading: boolean;
@@ -156,17 +149,6 @@ export function HealthReportSection({
   }
 
   const selectedSpecies = getMainPetSpecies(selectedPet);
-  const reportRecommendations = selectedReport
-    ? extractHealthReportRecommendations(selectedReport.healthReportContent)
-    : [];
-  const reportFallbackContent = selectedReport
-    ? extractHealthReportDisplayContent(selectedReport.healthReportContent)
-    : null;
-  const reportPrimaryContent =
-    reportRecommendations[0] ||
-    (reportFallbackContent
-      ? summarizeContent(reportFallbackContent, 96)
-      : '건강 분석 상세 내용이 아직 준비되지 않았어요.');
 
   return (
     <section className="w-full" aria-labelledby="home-health-report-heading">
@@ -181,24 +163,22 @@ export function HealthReportSection({
             <span className="text-[16px] font-semibold text-neutral-900">AI 건강 레포트</span>
           </div>
 
-          <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
+          <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
             <DoctorIcon className="mx-auto h-28 w-28 shrink-0 sm:mx-0 sm:h-36 sm:w-36" />
 
             <div className="min-w-0 flex-1">
               <h3 className="text-[22px] font-bold leading-snug text-neutral-950 sm:text-[24px]">
-                {selectedReport?.healthReportTitle ?? `${selectedPet.name}의 건강 데이터를 분석 중이에요.`}
+                {selectedReport
+                  ? `${selectedPet.name}의 건강 리포트`
+                  : `${selectedPet.name}의 건강 데이터를 분석 중이에요.`}
               </h3>
 
-              <div className="mt-3 space-y-1 text-[14px] leading-7 text-neutral-800 sm:text-[15px]">
-                {selectedReport ? (
-                  <>
-                    <p>{selectedReport.healthReportSummary}</p>
-                    <p>{reportPrimaryContent}</p>
-                    {reportRecommendations.length > 1 ? <p>{reportRecommendations[1]}</p> : null}
-                  </>
-                ) : (
-                  <p>{selectedPet.name}의 첫 건강 레포트를 만들 수 있도록 산책과 건강 기록을 조금 더 쌓아보세요.</p>
-                )}
+              <div className="mt-3 text-[14px] leading-7 text-neutral-800 sm:text-[15px]">
+                <p className="line-clamp-2">
+                  {selectedReport
+                    ? selectedReport.healthReportSummary
+                    : `${selectedPet.name}의 첫 건강 레포트를 만들 수 있도록 산책과 건강 기록을 조금 더 쌓아보세요.`}
+                </p>
               </div>
 
               <div className="mt-4 flex justify-end">
