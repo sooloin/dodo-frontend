@@ -24,6 +24,7 @@ import {
   useDeleteComment,
   useUpdateComment,
 } from '@/features/community';
+import { ReportDialog, type ReportTarget } from '@/features/report';
 import { getApiErrorMessage, getApiErrorStatus } from '@/shared/lib/api/errorMessage';
 import { LoadingSpinner } from '@/shared/ui';
 
@@ -64,6 +65,7 @@ export function BoardDetailPage() {
   });
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+  const [reportTarget, setReportTarget] = useState<ReportTarget | null>(null);
   const activeCommentPage = commentPagination.boardId === boardId ? commentPagination.page : 0;
   const commentsQuery = useCommentList(boardId, { page: activeCommentPage, size: 20 });
   const { mutateAsync: createComment, isPending: isCreatingComment } = useCreateComment();
@@ -282,6 +284,8 @@ export function BoardDetailPage() {
             onUpdateComment={handleUpdateComment}
             onDeleteComment={handleDeleteComment}
             onChangeCommentPage={(page) => setCommentPagination({ boardId, page })}
+            onReportBoard={() => setReportTarget({ type: 'BOARD', id: boardId })}
+            onReportComment={(commentId) => setReportTarget({ type: 'COMMENT', id: commentId })}
           />
         }
       />
@@ -297,6 +301,8 @@ export function BoardDetailPage() {
         }}
         onConfirm={() => void handleDelete()}
       />
+
+      <ReportDialog target={reportTarget} onClose={() => setReportTarget(null)} />
     </PageShell>
   );
 }

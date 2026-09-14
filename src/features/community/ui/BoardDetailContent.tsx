@@ -26,6 +26,8 @@ interface BoardDetailContentProps {
   onUpdateComment: (payload: { commentId: number; commentContent: string }) => Promise<void>;
   onDeleteComment: (commentId: number) => Promise<void>;
   onChangeCommentPage: (page: number) => void;
+  onReportBoard: () => void;
+  onReportComment: (commentId: number) => void;
 }
 
 interface CommentThread extends BoardComment {
@@ -162,6 +164,8 @@ export function BoardDetailContent({
   onUpdateComment,
   onDeleteComment,
   onChangeCommentPage,
+  onReportBoard,
+  onReportComment,
 }: BoardDetailContentProps) {
   const [draftComment, setDraftComment] = useState('');
   const [replyTargetId, setReplyTargetId] = useState<number | null>(null);
@@ -300,7 +304,7 @@ export function BoardDetailContent({
 
             <div className="flex items-center gap-4 text-sm text-neutral-400">
               {!canManage ? (
-                <button type="button" className="transition-colors hover:text-neutral-700">
+                <button type="button" onClick={onReportBoard} className="transition-colors hover:text-neutral-700">
                   {DETAIL_COPY.report}
                 </button>
               ) : null}
@@ -418,6 +422,7 @@ export function BoardDetailContent({
                   }}
                   onEditSubmit={() => void submitEdit(comment.commentId)}
                   onDelete={() => void handleDeleteComment(comment.commentId)}
+                  onReport={() => onReportComment(comment.commentId)}
                   onReplyStart={() => {
                     clearCommentScopedErrors(comment.commentId);
                     setEditingCommentId(null);
@@ -480,6 +485,7 @@ export function BoardDetailContent({
                     }}
                     onEditSubmit={() => void submitEdit(reply.commentId)}
                     onDelete={() => void handleDeleteComment(reply.commentId)}
+                    onReport={() => onReportComment(reply.commentId)}
                   />
                 ))}
               </div>
@@ -654,6 +660,7 @@ interface CommentRowProps {
   onEditSubmit: () => void;
   onDelete: () => void;
   onReplyStart?: () => void;
+  onReport: () => void;
 }
 
 function CommentRow({
@@ -670,6 +677,7 @@ function CommentRow({
   onEditSubmit,
   onDelete,
   onReplyStart,
+  onReport,
 }: CommentRowProps) {
   const { nickname } = getCommentAuthor(comment);
   const commentUserId = getCommentUserId(comment);
@@ -695,7 +703,7 @@ function CommentRow({
         {!isDeletedComment(comment) ? (
           <div className="flex items-center gap-4 text-sm text-neutral-400">
             {!canManage ? (
-              <button type="button" className="transition-colors hover:text-neutral-700">
+              <button type="button" onClick={onReport} className="transition-colors hover:text-neutral-700">
                 {DETAIL_COPY.report}
               </button>
             ) : null}
