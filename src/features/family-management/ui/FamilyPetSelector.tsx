@@ -4,16 +4,18 @@ export function FamilyPetSelector({
   pets,
   selectedPetId,
   onSelect,
+  title = '가족을 관리할 반려동물을 선택해 주세요',
 }: {
   pets: PetListItem[];
   selectedPetId: number;
   onSelect: (petId: number) => void;
+  title?: string;
 }) {
   return (
     <section className="overflow-hidden rounded-[20px] border border-neutral-200 bg-white shadow-sm">
       <div className="px-5 py-5 sm:px-6 sm:py-6">
         <p className="text-[11px] font-semibold tracking-[0.16em] text-neutral-400">SELECT PET</p>
-        <h2 className="mt-2 text-[18px] font-medium text-neutral-950">가족을 관리할 반려동물을 선택해 주세요</h2>
+        <h2 className="mt-2 text-[18px] font-medium text-neutral-950">{title}</h2>
 
         <div className="mt-4 flex flex-wrap gap-2">
           {pets.map((pet) => {

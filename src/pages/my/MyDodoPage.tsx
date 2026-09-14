@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom';
 
 import { useCurrentUser } from '@/features/auth';
+import { HealthAnalysisManagementContent } from '@/features/health-analysis';
 import { PetListContent } from '@/features/pet-list';
 import { MY_DODO_CONTENT_BY_KEY, getMyDodoMenuHref, getMyDodoMenuKeyFromSearch } from '@/pages/my/model/menu';
 import { FamilyManagementContent } from '@/pages/my/ui/FamilyManagementContent';
@@ -95,6 +96,8 @@ export function MyDodoPage() {
       <PetListContent />
     ) : activeKey === 'family' ? (
       <FamilyManagementContent />
+    ) : activeKey === 'ai-report' ? (
+      <HealthAnalysisManagementContent />
     ) : activeKey === 'profile-edit' ? (
       <MyProfileEditContent user={user} isLoading={isLoading} />
     ) : (

@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { getApiErrorMessage, useLeavePetFamily, type PetDetailResponse } from '@/features/auth';
+import { HealthAnalysisPreview } from '@/features/health-analysis';
 import { PetSpecialNotesPreview } from '@/features/pet-special-notes';
 import { PetWeightPreview } from '@/features/pet-weight';
 import petDefaultCatIllustration from '@/shared/assets/images/pet-default-cat.svg';
@@ -308,6 +309,21 @@ export function PetDetailContent({ pet }: { pet: PetDetailResponse }) {
           }
         >
           <PetWeightPreview petId={pet.petId} />
+        </InfoCard>
+
+        <InfoCard
+          title="AI 건강 분석"
+          tone="accent"
+          action={
+            <Link
+              to={`/my/pets/${pet.petId}/health`}
+              className="inline-flex h-9 items-center gap-1 rounded-full border border-neutral-200 bg-white px-3 text-sm font-medium text-neutral-800 transition-colors hover:border-brand/50 hover:text-brand"
+            >
+              전체 보기
+            </Link>
+          }
+        >
+          <HealthAnalysisPreview petId={pet.petId} petName={pet.petName} />
         </InfoCard>
 
         <InfoCard
