@@ -2,7 +2,6 @@ export type MyDodoMenuSection = 'pet' | 'account';
 
 export type MyDodoMenuKey =
   | 'pet-list'
-  | 'device'
   | 'family'
   | 'walk-history'
   | 'ai-report'
@@ -36,7 +35,6 @@ export const MY_DODO_SECTION_LABELS: Record<MyDodoMenuSection, string> = {
 
 export const MY_DODO_MENU_ITEMS: MyDodoMenuItem[] = [
   { key: 'pet-list', label: '반려동물 리스트', section: 'pet', type: 'link' },
-  { key: 'device', label: '디바이스 관리', section: 'pet', type: 'link' },
   { key: 'family', label: '가족 관리', section: 'pet', type: 'link' },
   { key: 'walk-history', label: '산책 기록', section: 'pet', type: 'link' },
   { key: 'ai-report', label: 'AI 레포트', section: 'pet', type: 'link' },
@@ -51,12 +49,6 @@ export const MY_DODO_CONTENT_BY_KEY: Record<MyDodoMenuKey, MyDodoContent> = {
     title: '등록된 반려동물이 없습니다',
     description: '반려동물을 등록하면 이곳에서 목록과 상세 정보를 한눈에 관리할 수 있어요.',
     actionLabel: '등록하기',
-  },
-  device: {
-    badge: 'DEVICE',
-    title: '디바이스 관리 준비 중',
-    description: '연결된 디바이스 상태 확인과 재등록 기능이 이 영역에 들어올 예정입니다.',
-    actionLabel: '기능 준비 중',
   },
   family: {
     badge: 'FAMILY',
