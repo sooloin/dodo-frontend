@@ -11,12 +11,15 @@ import {
   useUpdateFenceRange,
 } from '@/features/walk-fence';
 
+import { WalkHistoryPanel } from './ui/WalkHistoryPanel';
 import { WalkSideRail } from './ui/WalkSideRail';
 
 interface DraftCenter {
   lat: number;
   lng: number;
 }
+
+type WalkPanelView = 'fence' | 'history';
 
 const EMPTY_BOUNDARIES: never[] = [];
 
@@ -30,6 +33,7 @@ export function WalkPage() {
   const boundaries = boundariesData?.boundaries ?? EMPTY_BOUNDARIES;
   const pets = petListData?.pets ?? [];
 
+  const [panelView, setPanelView] = useState<WalkPanelView>('fence');
   const [selectedPetId, setSelectedPetId] = useState<number | null>(null);
   const [draftCenter, setDraftCenter] = useState<DraftCenter | null>(null);
   const [radius, setRadius] = useState(500);
@@ -135,24 +139,51 @@ export function WalkPage() {
         <aside className="flex w-[360px] flex-col overflow-hidden rounded-2xl bg-white shadow-md">
           <div className="shrink-0 border-b border-neutral-200 px-5 py-4">
             <h1 className="text-lg font-bold text-neutral-900">산책</h1>
-            <p className="mt-0.5 text-xs text-neutral-500">반려동물 안전 울타리를 설정하세요.</p>
+            <p className="mt-0.5 text-xs text-neutral-500">
+              {panelView === 'fence' ? '반려동물 안전 울타리를 설정하세요.' : '산책 기록을 확인해보세요.'}
+            </p>
+
+            <div className="mt-3 flex gap-1 rounded-xl bg-neutral-100 p-1">
+              <button
+                type="button"
+                onClick={() => setPanelView('fence')}
+                className={`flex-1 rounded-lg py-1.5 text-sm font-medium transition-colors ${
+                  panelView === 'fence' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-500'
+                }`}
+              >
+                울타리 설정
+              </button>
+              <button
+                type="button"
+                onClick={() => setPanelView('history')}
+                className={`flex-1 rounded-lg py-1.5 text-sm font-medium transition-colors ${
+                  panelView === 'history' ? 'bg-white text-neutral-900 shadow-sm' : 'text-neutral-500'
+                }`}
+              >
+                산책기록 보기
+              </button>
+            </div>
           </div>
           <div className="flex-1 overflow-y-auto">
-            <FenceControlPanel
-              pets={pets}
-              selectedPetId={selectedPetId}
-              onSelectPet={setSelectedPetId}
-              existingFence={existingFence}
-              draftCenter={draftCenter}
-              radius={radius}
-              onRadiusChange={setRadius}
-              fenceName={fenceName}
-              onFenceNameChange={setFenceName}
-              onCreate={handleCreate}
-              onUpdate={handleUpdate}
-              onToggle={handleToggle}
-              isSubmitting={isSubmitting}
-            />
+            {panelView === 'fence' ? (
+              <FenceControlPanel
+                pets={pets}
+                selectedPetId={selectedPetId}
+                onSelectPet={setSelectedPetId}
+                existingFence={existingFence}
+                draftCenter={draftCenter}
+                radius={radius}
+                onRadiusChange={setRadius}
+                fenceName={fenceName}
+                onFenceNameChange={setFenceName}
+                onCreate={handleCreate}
+                onUpdate={handleUpdate}
+                onToggle={handleToggle}
+                isSubmitting={isSubmitting}
+              />
+            ) : (
+              <WalkHistoryPanel />
+            )}
           </div>
         </aside>
       </div>
