@@ -20,11 +20,14 @@ export interface MainHealthReport {
   checkupDate: string;
 }
 
+export type MainAnnouncementTag = 'URGENT' | 'INFO';
+
 export interface MainAnnouncement {
   boardTitle: string;
   boardContent: string;
   imageFileUrl: string | null;
   viewCount: number;
+  tag: MainAnnouncementTag;
 }
 
 export interface MainHomeResponse {

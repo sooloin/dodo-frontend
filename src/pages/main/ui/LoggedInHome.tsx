@@ -5,7 +5,6 @@ import { getApiErrorMessage } from '@/shared/lib/api/errorMessage';
 import { getLatestReportByPet } from '../model/formatters';
 import { useHomeDashboard } from '../model/useHomeDashboard';
 import { HealthReportSection } from './sections/HealthReportSection';
-import { HotTopicSection } from './sections/HotTopicSection';
 import { NoticeAndQuickLinksSection } from './sections/NoticeAndQuickLinksSection';
 
 export function LoggedInHome() {
@@ -14,6 +13,7 @@ export function LoggedInHome() {
 
   const petProfiles = data?.petProfiles ?? [];
   const healthReports = data?.healthReports ?? [];
+  const announcements = data?.announcement ?? [];
 
   const resolvedSelectedPetId =
     selectedPetId !== null && petProfiles.some((pet) => pet.petId === selectedPetId)
@@ -39,8 +39,7 @@ export function LoggedInHome() {
           void refetch();
         }}
       />
-      <NoticeAndQuickLinksSection />
-      <HotTopicSection />
+      <NoticeAndQuickLinksSection announcements={announcements} />
     </div>
   );
 }
