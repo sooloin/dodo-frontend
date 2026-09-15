@@ -90,4 +90,18 @@ export const queryKeys = {
       ] as const,
     unreadCount: () => ['notifications', 'unread-count'] as const,
   },
+  activities: {
+    history: (params?: { page?: number; size?: number; sort?: string }) =>
+      ['activities', 'history', params?.page ?? 0, params?.size ?? 10, params?.sort ?? ''] as const,
+    historyDetail: (historyId: number) => ['activities', 'history', historyId, 'detail'] as const,
+    nearbyPopular: (params: { latitude: number; longitude: number; limit?: number }) =>
+      [
+        'activities',
+        'history',
+        'popular',
+        params.latitude.toFixed(3),
+        params.longitude.toFixed(3),
+        params.limit ?? 10,
+      ] as const,
+  },
 } as const;
